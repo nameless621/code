@@ -53,6 +53,7 @@ int main() {
 
     dist[position] = 0;
     Q.push(position);
+    //幅優先探索を行う
     while(!Q.empty()) {
         auto x = Q.front();
         Q.pop();
