@@ -43,13 +43,13 @@ function initAnts(count) {
 startButton.addEventListener('click', () => {
   if(intervalID !== null) return;
 
-  const count = parseInt(antCountInput.value, 10);
-  const speed = parseInt(speedInput.value, 10);
-  initAnts(count);
-
   intervalID = setInterval(() => {
-    for(let step = 0; step < speed; step++) {
-      for(let i = 0; i < count; i++) {
+    if(parseInt(antCountInput.value, 10) != ants.length) {
+      initAnts(parseInt(antCountInput.value, 10));
+    }
+
+    for(let step = 0; step < parseInt(speedInput.value, 10); step++) {
+      for(let i = 0; i < parseInt(antCountInput.value, 10); i++) {
         let currentColor = board[ants[i].x][ants[i].y];
         if(currentColor === 0) {
           ants[i].direction = (ants[i].direction + 3) % 4;
