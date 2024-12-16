@@ -23,7 +23,7 @@ function setColor() {
 }
 
 function initAnts(count) {
-  for(let i = 0; i < count; i++) {
+  for(let i = ants.length; i < count; i++) {
     let x = Math.floor(Math.random() * W);
     let y = Math.floor(Math.random() * H);
     let d = Math.floor(Math.random() * 4);
