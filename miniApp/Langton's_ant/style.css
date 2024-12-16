@@ -30,3 +30,15 @@ canvas {
   padding: 8px 16px;
   cursor: pointer;
 }
+
+.settings {
+  margin-top: 10px;
+}
+
+.settings label {
+  margin-right: 8px;
+}
+.settings input {
+  width: 60px;
+  margin-right: 20px;
+}
