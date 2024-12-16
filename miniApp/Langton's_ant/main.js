@@ -9,7 +9,7 @@ const speedInput = document.getElementById('speed');
 let intervalID = null;
 const dx = [0, 1, 0, -1];
 const dy = [-1, 0, 1, 0];
-let cellsize = 2;
+let cellsize = 1;
 let W = canvas.width / cellsize;
 let H = canvas.height / cellsize;
 let board = Array.from({ length: W }, () => Array(H).fill(0));
