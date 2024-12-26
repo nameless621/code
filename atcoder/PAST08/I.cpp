@@ -9,33 +9,27 @@ using namespace atcoder;
 
 
 
-using S = long long;
-using F = long long;
-
-const S INF = 8e18;
-
-S op(S a, S b){ return std::max(a, b); }
-S e(){ return -INF; }
-S mapping(F f, S x){ return f+x; }
-F composition(F f, F g){ return f+g; }
-F id(){ return 0; }
-
 int main() {
-    int N, Q;
-    cin >> N >> Q;
+    int N;
+    cin >> N;
 
-    vector<S> V(2 * N);
-    lazy_segtree<S, op, e, F, mapping, composition, id> seg(V);
-    while(Q--) {
-        int t, k;
-        cin >> t >> k;
-        if(t == 1) {
-            int res = seg.get(k - 1);
-            if(res % 2 == 0) cout << k << endl;
-            else cout << 2 * N - k + 1 << endl;
+    int cnt = 0;
+    priority_queue<long long, vector<long long>, greater<long long>> PQ;
+    for(int i = 0; i < N; i++) {
+        int A;
+        cin >> A;
+        while(A % 2 == 0) {
+            A /= 2;
+            cnt++;
         }
-        else {
-            seg.apply(N - k, N + k, 1);
-        }
+        PQ.push(A);
     }
+
+    while(cnt--) {
+        long long X = PQ.top();
+        PQ.pop();
+        PQ.push(X * 3);
+    }
+
+    cout << PQ.top() << endl;
 }
