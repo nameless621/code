@@ -5,7 +5,7 @@ using namespace atcoder;
 
 
 //    C - Rotation
-//    https://atcoder.jp/contests/abc254/tasks/abc258_c
+//    https://atcoder.jp/contests/abc258/tasks/abc258_c
 
 
 
