@@ -5,7 +5,7 @@ using namespace atcoder;
 
 
 //    D - Distinct Trio
-//    https://atcoder.jp/contests/abc250/tasks/abc252_d
+//    https://atcoder.jp/contests/abc252/tasks/abc252_d
 
 
 
