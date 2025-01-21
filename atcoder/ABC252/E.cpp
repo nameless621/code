@@ -5,7 +5,7 @@ using namespace atcoder;
 
 
 //    E - Road Reduction
-//    https://atcoder.jp/contests/abc250/tasks/abc252_e
+//    https://atcoder.jp/contests/abc252/tasks/abc252_e
 
 
 
