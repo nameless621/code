@@ -5,7 +5,7 @@ using namespace atcoder;
 
 
 //    A - ASCII code
-//    https://atcoder.jp/contests/abc250/tasks/abc252_a
+//    https://atcoder.jp/contests/abc252/tasks/abc252_a
 
 
 
