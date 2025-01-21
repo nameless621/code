@@ -5,7 +5,7 @@ using namespace atcoder;
 
 
 //    C - Changing Jewels
-//    https://atcoder.jp/contests/abc254/tasks/abc260_c
+//    https://atcoder.jp/contests/abc260/tasks/abc260_c
 
 
 
