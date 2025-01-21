@@ -5,7 +5,7 @@ using namespace atcoder;
 
 
 //    A - Six Characters
-//    https://atcoder.jp/contests/abc250/tasks/abc251_a
+//    https://atcoder.jp/contests/abc251/tasks/abc251_a
 
 
 
