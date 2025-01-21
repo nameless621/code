@@ -5,7 +5,7 @@ using namespace atcoder;
 
 
 //    B - Takahashi's Failure 
-//    https://atcoder.jp/contests/abc250/tasks/abc252_b
+//    https://atcoder.jp/contests/abc252/tasks/abc252_b
 
 
 
