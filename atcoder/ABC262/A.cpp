@@ -5,7 +5,7 @@ using namespace atcoder;
 
 
 //    A - World Cup
-//    https://atcoder.jp/contests/abc254/tasks/abc262_a
+//    https://atcoder.jp/contests/abc262/tasks/abc262_a
 
 
 
