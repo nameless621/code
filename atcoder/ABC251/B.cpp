@@ -5,7 +5,7 @@ using namespace atcoder;
 
 
 //    B - At Most 3 (Judge ver.)
-//    https://atcoder.jp/contests/abc250/tasks/abc251_b
+//    https://atcoder.jp/contests/abc251/tasks/abc251_b
 
 
 
