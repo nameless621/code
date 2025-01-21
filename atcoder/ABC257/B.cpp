@@ -5,7 +5,7 @@ using namespace atcoder;
 
 
 //    B - 1D Pawn 
-//    https://atcoder.jp/contests/abc254/tasks/abc257_b
+//    https://atcoder.jp/contests/abc257/tasks/abc257_b
 
 
 
