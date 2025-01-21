@@ -5,7 +5,7 @@ using namespace atcoder;
 
 
 //    B - Triangle (Easier)
-//    https://atcoder.jp/contests/abc254/tasks/abc262_b
+//    https://atcoder.jp/contests/abc262/tasks/abc262_b
 
 
 
