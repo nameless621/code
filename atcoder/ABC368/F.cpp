@@ -10,7 +10,7 @@ using mint = modint998244353;
 
 
 
-vector<int> build_spff(int n) {
+vector<int> build_spf(int n) {
     vector<int> spf(n+1);
     for (int i = 0; i <= n; i++) spf[i] = i;
     for (int i = 2; i * i <= n; i++) {
@@ -24,7 +24,7 @@ vector<int> build_spff(int n) {
 
 vector<int> E(int n) {
     vector<int> res(n+1, 0);
-    auto spf = build_spff(n);
+    auto spf = build_spf(n);
     for (int i = 2; i <= n; i++) {
         int x = i;
         while(x > 1) {
