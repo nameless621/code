@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>BMP Hex Dumper (Hidemaru Style)</title>
+    <style>
+        body { font-family: 'Consolas', 'Courier New', monospace; line-height: 1.5; max-width: 1000px; margin: 20px auto; padding: 0 20px; background-color: #f0f2f5; }
+        .container { border: 2px dashed #007bff; padding: 20px; border-radius: 8px; text-align: center; background: white; margin-bottom: 20px; }
+        .info { background: #343a40; color: #fff; padding: 15px; border-radius: 5px; margin-bottom: 10px; font-size: 0.9em; }
+        #hexOutput { 
+            width: 100%; height: 450px; padding: 15px; border: 1px solid #444; 
+            background: #ffffff; color: #333; overflow-y: auto; 
+            white-space: pre-wrap; word-break: break-all; font-size: 13px; border-radius: 4px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .controls { margin-bottom: 10px; display: flex; gap: 10px; align-items: center; }
+        button { background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #0056b3; }
+        .copy-btn { background: #28a745; }
+        #status { font-size: 14px; color: #28a745; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>BMP画素データ抽出</h2>
+    
+    <div class="container">
+        <input type="file" id="fileInput" accept=".bmp">
+    </div>
+
+    <div id="resultArea" style="display:none;">
+        <div class="info" id="details"></div>
+        
+        <div class="controls">
+            <button class="copy-btn" id="copyBtn">テキストをコピー</button>
+            <span id="status"></span>
+        </div>
+        <div id="hexOutput"></div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const hexOutput = document.getElementById('hexOutput');
+        const details = document.getElementById('details');
+        const resultArea = document.getElementById('resultArea');
+        const copyBtn = document.getElementById('copyBtn');
+        const status = document.getElementById('status');
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const buffer = event.target.result;
+                const view = new DataView(buffer);
+
+                if (view.getUint16(0, true) !== 0x4D42) {
+                    alert("BMPファイルではありません");
+                    return;
+                }
+
+                const offset = view.getUint32(10, true);
+                const width = view.getInt32(18, true);
+                const height = view.getInt32(22, true);
+                const bpp = view.getUint16(28, true);
+
+                if (bpp !== 8) {
+                    alert("256色(8bit)専用です。");
+                    return;
+                }
+
+                const rawData = new Uint8Array(buffer.slice(offset));
+                
+                // --- 秀丸バイナリ風の整形ロジック ---
+                let outputText = "";
+                for (let i = 0; i < rawData.length; i++) {
+                    const hex = "0x" + rawData[i].toString(16).toUpperCase().padStart(2, '0');
+                    
+                    outputText += hex;
+
+                    // 1行目は9個で改行
+                    if (i === 8) {
+                        outputText += ",\n";
+                    } 
+                    // 2行目以降は16個ごとに改行 ( (i-9) % 16 == 15 )
+                    else if (i > 8 && (i - 9) % 16 === 15) {
+                        outputText += ",\n";
+                    } 
+                    // それ以外はカンマとスペース
+                    else if (i < rawData.length - 1) {
+                        outputText += ", ";
+                    }
+                }
+
+                details.innerHTML = `FILE: ${file.name} | SIZE: ${width}x${height} | DATA: ${rawData.length} bytes`;
+                hexOutput.textContent = outputText;
+                resultArea.style.display = 'block';
+            };
+            reader.readAsArrayBuffer(file);
+        });
+
+        copyBtn.addEventListener('click', function() {
+            const text = hexOutput.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                status.textContent = "コピーしました！";
+                setTimeout(() => { status.textContent = ""; }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
