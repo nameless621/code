@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>BMP Hex Dumper (Hidemaru Style)</title>
+    <title>BMP Hex Dumper</title>
     <style>
         body { font-family: 'Consolas', 'Courier New', monospace; line-height: 1.5; max-width: 1000px; margin: 20px auto; padding: 0 20px; background-color: #f0f2f5; }
         .container { border: 2px dashed #007bff; padding: 20px; border-radius: 8px; text-align: center; background: white; margin-bottom: 20px; }
@@ -71,24 +71,20 @@
 
                 const rawData = new Uint8Array(buffer.slice(offset));
                 
-                // --- 秀丸バイナリ風の整形ロジック ---
                 let outputText = "";
                 for (let i = 0; i < rawData.length; i++) {
                     const hex = "0x" + rawData[i].toString(16).toUpperCase().padStart(2, '0');
                     
                     outputText += hex;
 
-                    // 1行目は9個で改行
-                    if (i === 8) {
+                    if (i === 9) {
                         outputText += ",\n";
                     } 
-                    // 2行目以降は16個ごとに改行 ( (i-9) % 16 == 15 )
-                    else if (i > 8 && (i - 9) % 16 === 15) {
+                    else if (i > 8 && (i - 10) % 16 === 15) {
                         outputText += ",\n";
                     } 
-                    // それ以外はカンマとスペース
                     else if (i < rawData.length - 1) {
-                        outputText += ", ";
+                        outputText += ",";
                     }
                 }
 
