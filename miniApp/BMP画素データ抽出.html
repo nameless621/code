@@ -6,6 +6,10 @@
     <style>
         body { font-family: 'Consolas', 'Courier New', monospace; line-height: 1.5; max-width: 1000px; margin: 20px auto; padding: 0 20px; background-color: #f0f2f5; }
         .container { border: 2px dashed #007bff; padding: 20px; border-radius: 8px; text-align: center; background: white; margin-bottom: 20px; }
+        .container p {
+            margin: 8px 0;
+            color: #555;
+        }
         .info { background: #343a40; color: #fff; padding: 15px; border-radius: 5px; margin-bottom: 10px; font-size: 0.9em; }
         #hexOutput { 
             width: 100%; height: 450px; padding: 15px; border: 1px solid #444; 
@@ -24,6 +28,8 @@
     <h2>BMP画素データ抽出</h2>
     
     <div class="container">
+        <p>BMPファイルをドラッグ&ドロップ</p>
+        <p>または</p>
         <input type="file" id="fileInput" accept=".bmp">
     </div>
 
@@ -44,12 +50,16 @@
         const resultArea = document.getElementById('resultArea');
         const copyBtn = document.getElementById('copyBtn');
         const status = document.getElementById('status');
+        const container = document.querySelector('.container');
 
-        fileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
+        // =========================
+        // 共通処理
+        // =========================
+        function processFile(file) {
             if (!file) return;
 
             const reader = new FileReader();
+
             reader.onload = function(event) {
                 const buffer = event.target.result;
                 const view = new DataView(buffer);
@@ -70,36 +80,85 @@
                 }
 
                 const rawData = new Uint8Array(buffer.slice(offset));
-                
+
                 let outputText = "";
+
                 for (let i = 0; i < rawData.length; i++) {
-                    const hex = "0x" + rawData[i].toString(16).toUpperCase().padStart(2, '0');
-                    
+                    const hex = "0x" + rawData[i]
+                        .toString(16)
+                        .toUpperCase()
+                        .padStart(2, '0');
+
                     outputText += hex;
 
                     if (i === 9) {
                         outputText += ",\n";
-                    } 
+                    }
                     else if (i > 8 && (i - 10) % 16 === 15) {
                         outputText += ",\n";
-                    } 
+                    }
                     else if (i < rawData.length - 1) {
                         outputText += ",";
                     }
                 }
 
-                details.innerHTML = `FILE: ${file.name} | SIZE: ${width}x${height} | DATA: ${rawData.length} bytes`;
+                details.innerHTML =
+                    `FILE: ${file.name} | SIZE: ${width}x${height} | DATA: ${rawData.length} bytes`;
+
                 hexOutput.textContent = outputText;
                 resultArea.style.display = 'block';
             };
+
             reader.readAsArrayBuffer(file);
+        }
+
+        // =========================
+        // input選択
+        // =========================
+        fileInput.addEventListener('change', function(e) {
+            processFile(e.target.files[0]);
         });
 
+        // =========================
+        // ドラッグ中
+        // =========================
+        container.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            container.style.backgroundColor = '#dbeafe';
+        });
+
+        // =========================
+        // ドラッグ離脱
+        // =========================
+        container.addEventListener('dragleave', function() {
+            container.style.backgroundColor = 'white';
+        });
+
+        // =========================
+        // ドロップ
+        // =========================
+        container.addEventListener('drop', function(e) {
+            e.preventDefault();
+
+            container.style.backgroundColor = 'white';
+
+            const file = e.dataTransfer.files[0];
+
+            processFile(file);
+        });
+
+        // =========================
+        // コピー
+        // =========================
         copyBtn.addEventListener('click', function() {
             const text = hexOutput.textContent;
+
             navigator.clipboard.writeText(text).then(() => {
                 status.textContent = "コピーしました！";
-                setTimeout(() => { status.textContent = ""; }, 2000);
+
+                setTimeout(() => {
+                    status.textContent = "";
+                }, 2000);
             });
         });
     </script>
